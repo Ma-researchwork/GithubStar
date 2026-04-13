@@ -1,0 +1,19 @@
+{
+  "updated_at": "2026-04-13T00:00:00Z",
+  "repos": [
+    {
+      "rank": 1,
+      "name": "awesome",
+      "full_name": "sindresorhus/awesome",
+      "description": "Awesome lists about all kinds of interesting topics",
+      "stars": 342000,
+      "forks": 28900,
+      "language": "Markdown",
+      "url": "https://github.com/sindresorhus/awesome",
+      "owner": "sindresorhus",
+      "avatar": "https://avatars.githubusercontent.com/u/170270",
+      "topics": ["awesome", "lists"],
+      "stars_today": 120
+    }
+  ]
+}
