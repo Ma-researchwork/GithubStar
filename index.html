@@ -14,23 +14,41 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #080c10;
-      --surface:   #0d1117;
-      --card:      #111820;
-      --border:    #1e2736;
-      --border2:   #2a3547;
-      --gold:      #f0b429;
-      --gold2:     #ffd166;
-      --blue:      #58a6ff;
-      --green:     #3fb950;
-      --purple:    #bc8cff;
-      --red:       #f85149;
-      --muted:     #8b949e;
-      --dim:       #484f58;
-      --text:      #e6edf3;
-      --mono:      'Space Mono', monospace;
-      --sans:      'Syne', sans-serif;
-    }
+  --bg:        #080c10;
+  --surface:   #0d1117;
+  --card:      #111820;
+  --border:    #1e2736;
+  --border2:   #2a3547;
+  --gold:      #f0b429;
+  --gold2:     #ffd166;
+  --blue:      #58a6ff;
+  --green:     #3fb950;
+  --purple:    #bc8cff;
+  --red:       #f85149;
+  --muted:     #8b949e;
+  --dim:       #484f58;
+  --text:      #e6edf3;
+  --mono:      'Space Mono', monospace;
+  --sans:      'Syne', sans-serif;
+}
+
+/* ── Light mode ───────────────────────────────────────────── */
+body.light {
+  --bg:      #ffffff;
+  --surface: #f6f8fa;
+  --card:    #ffffff;
+  --border:  #d0d7de;
+  --border2: #b0b7be;
+  --blue:    #0969da;
+  --green:   #1a7f37;
+  --muted:   #57606a;
+  --dim:     #8c959f;
+  --text:    #1f2328;
+  --gold:    #d4a017;
+}
+
+body.light::after { opacity: 0.08; }
+body.light::before { opacity: 0.2; }
 
     html { scroll-behavior: smooth; }
 
