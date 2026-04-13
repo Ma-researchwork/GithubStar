@@ -3,7 +3,7 @@
 > Auto-updated daily leaderboard of the most starred GitHub projects.  
 > Zero backend. Free forever. Emails delivered every morning.
 
-**Live site:** [githubstar.vercel.app](https://githubstar.vercel.app)
+**Live site:** [githubstar.vercel.app](https://github-star-mocha.vercel.app)
 
 ---
 
