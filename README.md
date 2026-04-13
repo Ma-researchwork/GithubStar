@@ -26,7 +26,7 @@ Vercel detects push → auto-deploys index.html in ~30 seconds
 ### 1 · Fork & clone
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/githubstar
+git clone https://github.com/Ma-researchwork/GithubStar
 cd githubstar
 ```
 
