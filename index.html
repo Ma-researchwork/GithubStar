@@ -505,7 +505,14 @@ body.light::before { opacity: 0.2; }
   </footer>
 
 </div><!-- /wrap -->
-
+<!-- Theme toggle -->
+<div id="theme-toggle" onclick="toggleTheme()"
+  style="position:fixed;bottom:28px;left:28px;background:var(--card);
+         border:1px solid var(--border2);border-radius:10px;width:44px;height:44px;
+         display:flex;align-items:center;justify-content:center;cursor:pointer;
+         font-size:20px;z-index:100;transition:all .2s">
+  🌙
+</div>
 <!-- Scroll top -->
 <div id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 
@@ -634,7 +641,17 @@ window.addEventListener('scroll', () => {
   const btn = document.getElementById('scroll-top');
   btn.classList.toggle('visible', window.scrollY > 400);
 });
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light');
+  document.getElementById('theme-toggle').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
 
+// Remember user's preference
+if (localStorage.getItem('theme') === 'light') {
+  document.body.classList.add('light');
+  document.getElementById('theme-toggle').textContent = '🌙';
+}
 // ── Boot ──────────────────────────────────────────────────────────
 loadData();
 </script>
