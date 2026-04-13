@@ -29,7 +29,7 @@ SUBSCRIBERS_RAW  = os.environ.get("SUBSCRIBERS", "")
 SUBSCRIBERS      = [e.strip() for e in SUBSCRIBERS_RAW.split(",") if e.strip()]
 
 OUTPUT_FILE      = os.path.join(os.path.dirname(__file__), "../data/repos.json")
-TOP_N            = 30   # How many repos to track
+TOP_N            = 666   # How many repos to track
 
 LANG_COLORS = {
     "Python":     "#3572A5",
