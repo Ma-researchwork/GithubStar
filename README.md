@@ -1,4 +1,4 @@
-![GithubStar Logo](Image.png)
+![GithubStar Logo](logo_Image.png)
 # ⭐ GithubStar
 
 > Auto-updated daily leaderboard of the most starred GitHub projects.  
