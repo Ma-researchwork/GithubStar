@@ -17,6 +17,7 @@ import smtplib
 import datetime
 import urllib.request
 import urllib.parse
+import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -29,7 +30,7 @@ SUBSCRIBERS_RAW  = os.environ.get("SUBSCRIBERS", "")
 SUBSCRIBERS      = [e.strip() for e in SUBSCRIBERS_RAW.split(",") if e.strip()]
 
 OUTPUT_FILE      = os.path.join(os.path.dirname(__file__), "../data/repos.json")
-TOP_N            = 100000   # How many repos to track
+TOP_N            = 500     # How many repos to track (can be 500, 1000, etc.)
 
 LANG_COLORS = {
     "Python":     "#3572A5",
@@ -65,18 +66,45 @@ def gh_request(url):
 
 
 def fetch_top_repos():
-    """Fetch top starred repositories using GitHub Search API."""
+    """Fetch top starred repositories using GitHub Search API with pagination."""
     # Search for repos with 10k+ stars, pushed recently
     cutoff = (datetime.date.today() - datetime.timedelta(days=365)).isoformat()
     query  = urllib.parse.quote(f"stars:>10000 pushed:>{cutoff}")
-    url    = f"https://api.github.com/search/repositories?q={query}&sort=stars&order=desc&per_page={TOP_N}"
-
-    print(f"Fetching top repos from GitHub API...")
-    data  = gh_request(url)
-    items = data.get("items", [])
-
+    
+    all_items = []
+    page = 1
+    per_page = 100  # GitHub max is 100
+    
+    print(f"Fetching top {TOP_N} repos from GitHub API (paginated)...")
+    
+    while len(all_items) < TOP_N and page <= 10:  # Max 10 pages
+        url = f"https://api.github.com/search/repositories?q={query}&sort=stars&order=desc&per_page={per_page}&page={page}"
+        
+        try:
+            print(f"  Fetching page {page}...")
+            data = gh_request(url)
+            items = data.get("items", [])
+            
+            if not items:
+                break
+                
+            all_items.extend(items)
+            print(f"    Got {len(items)} repos (total so far: {len(all_items)})")
+            
+            page += 1
+            
+            # Be respectful to GitHub API rate limits
+            time.sleep(0.5)
+            
+        except Exception as e:
+            print(f"  Error on page {page}: {e}")
+            break
+    
+    # Trim to TOP_N
+    all_items = all_items[:TOP_N]
+    
     repos = []
-    for i, item in enumerate(items, 1):
+    for i, item in enumerate(all_items, 1):
         lang = item.get("language") or "Other"
         repos.append({
             "rank":        i,
@@ -94,7 +122,8 @@ def fetch_top_repos():
             "pushed_at":   item.get("pushed_at", ""),
             "created_at":  item.get("created_at", ""),
         })
-        print(f"  #{i:2d} {item['full_name']} ⭐ {item['stargazers_count']:,}")
+        if i <= 20 or i % 50 == 0:  # Show progress
+            print(f"  #{i:3d} {item['full_name']} ⭐ {item['stargazers_count']:,}")
 
     return repos
 
