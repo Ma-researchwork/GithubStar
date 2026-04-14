@@ -472,7 +472,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* Language dropdown panel */
+    /* Language dropdown panel - scrollable for many languages */
     .lang-panel {
       position: absolute;
       bottom: 54px;
@@ -482,15 +482,30 @@
       border-radius: 16px;
       padding: 12px 8px;
       backdrop-filter: blur(12px);
-      background: rgba(var(--card-rgb, 17, 24, 34), 0.92);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+      background: rgba(var(--card-rgb, 17, 24, 34), 0.94);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      min-width: 170px;
+      gap: 6px;
+      min-width: 190px;
+      max-height: 420px;
+      overflow-y: auto;
       transform-origin: bottom left;
       animation: fadeSlideUp 0.2s ease;
       z-index: 101;
+      scrollbar-width: thin;
+    }
+
+    .lang-panel::-webkit-scrollbar {
+      width: 5px;
+    }
+    .lang-panel::-webkit-scrollbar-track {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    .lang-panel::-webkit-scrollbar-thumb {
+      background: var(--gold);
+      border-radius: 4px;
     }
 
     @keyframes fadeSlideUp {
@@ -515,6 +530,7 @@
       font-size: 13px;
       transition: background 0.15s;
       color: var(--text);
+      white-space: nowrap;
     }
 
     .lang-option:hover {
@@ -544,9 +560,12 @@
         height: 40px;
         font-size: 18px;
       }
+      .lang-panel {
+        max-height: 360px;
+        min-width: 170px;
+      }
     }
 
-    /* store card rgb for backdrop */
     body {
       --card-rgb: 17, 24, 34;
     }
@@ -605,124 +624,54 @@
   </footer>
 </div><!-- /wrap -->
 
-<!-- Floating controls: theme + language button with flags -->
+<!-- Floating controls: theme + language button with flags (15+ languages) -->
 <div class="floating-controls">
   <div id="theme-toggle" class="ctrl-btn" onclick="toggleTheme()">🌙</div>
   <div id="lang-btn" class="ctrl-btn">🌐</div>
   <div id="lang-panel" class="lang-panel hidden">
-    <div class="lang-option" data-lang="en">
-      <span class="flag-icon">🇬🇧</span> <span>English</span>
-    </div>
-    <div class="lang-option" data-lang="zh">
-      <span class="flag-icon">🇨🇳</span> <span>中文</span>
-    </div>
-    <div class="lang-option" data-lang="es">
-      <span class="flag-icon">🇪🇸</span> <span>Español</span>
-    </div>
-    <div class="lang-option" data-lang="fr">
-      <span class="flag-icon">🇫🇷</span> <span>Français</span>
-    </div>
-    <div class="lang-option" data-lang="ja">
-      <span class="flag-icon">🇯🇵</span> <span>日本語</span>
-    </div>
-    <div class="lang-option" data-lang="ko">
-      <span class="flag-icon">🇰🇷</span> <span>한국어</span>
-    </div>
-    <div class="lang-option" data-lang="de">
-      <span class="flag-icon">🇩🇪</span> <span>Deutsch</span>
-    </div>
+    <!-- 15+ languages with country flags -->
+    <div class="lang-option" data-lang="en"><span class="flag-icon">🇬🇧</span> <span>English</span></div>
+    <div class="lang-option" data-lang="zh"><span class="flag-icon">🇨🇳</span> <span>中文</span></div>
+    <div class="lang-option" data-lang="es"><span class="flag-icon">🇪🇸</span> <span>Español</span></div>
+    <div class="lang-option" data-lang="fr"><span class="flag-icon">🇫🇷</span> <span>Français</span></div>
+    <div class="lang-option" data-lang="de"><span class="flag-icon">🇩🇪</span> <span>Deutsch</span></div>
+    <div class="lang-option" data-lang="ja"><span class="flag-icon">🇯🇵</span> <span>日本語</span></div>
+    <div class="lang-option" data-lang="ko"><span class="flag-icon">🇰🇷</span> <span>한국어</span></div>
+    <div class="lang-option" data-lang="ru"><span class="flag-icon">🇷🇺</span> <span>Русский</span></div>
+    <div class="lang-option" data-lang="pt"><span class="flag-icon">🇵🇹</span> <span>Português</span></div>
+    <div class="lang-option" data-lang="it"><span class="flag-icon">🇮🇹</span> <span>Italiano</span></div>
+    <div class="lang-option" data-lang="nl"><span class="flag-icon">🇳🇱</span> <span>Nederlands</span></div>
+    <div class="lang-option" data-lang="pl"><span class="flag-icon">🇵🇱</span> <span>Polski</span></div>
+    <div class="lang-option" data-lang="tr"><span class="flag-icon">🇹🇷</span> <span>Türkçe</span></div>
+    <div class="lang-option" data-lang="vi"><span class="flag-icon">🇻🇳</span> <span>Tiếng Việt</span></div>
+    <div class="lang-option" data-lang="th"><span class="flag-icon">🇹🇭</span> <span>ไทย</span></div>
+    <div class="lang-option" data-lang="ar"><span class="flag-icon">🇸🇦</span> <span>العربية</span></div>
+    <div class="lang-option" data-lang="hi"><span class="flag-icon">🇮🇳</span> <span>हिन्दी</span></div>
   </div>
 </div>
 
 <div id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 
 <script>
-// ========== TRANSLATION DICTIONARY ==========
+// ========== TRANSLATION DICTIONARY (expanded 15+ languages) ==========
 const translations = {
-  en: {
-    tagline: "// daily leaderboard of the most starred open-source projects on earth",
-    live: "live",
-    updated_prefix: "updated",
-    repos_tracked: "repos tracked",
-    all_languages: "All Languages",
-    fetching: "fetching star data...",
-    no_results: "no repos match your search.",
-    subscribe_link: "subscribe →",
-    github_link: "⭐ GitHub",
-    search_placeholder: "/ search repos...",
-  },
-  zh: {
-    tagline: "// 每日全球星标最多的开源项目排行榜",
-    live: "实时",
-    updated_prefix: "更新于",
-    repos_tracked: "个项目",
-    all_languages: "所有语言",
-    fetching: "加载星标数据中...",
-    no_results: "没有找到匹配的项目。",
-    subscribe_link: "订阅 →",
-    github_link: "⭐ GitHub",
-    search_placeholder: "/ 搜索仓库...",
-  },
-  es: {
-    tagline: "// ranking diario de proyectos open-source con más estrellas",
-    live: "en vivo",
-    updated_prefix: "actualizado",
-    repos_tracked: "repos rastreados",
-    all_languages: "Todos los lenguajes",
-    fetching: "cargando datos...",
-    no_results: "no hay repositorios que coincidan.",
-    subscribe_link: "suscribirse →",
-    github_link: "⭐ GitHub",
-    search_placeholder: "/ buscar repos...",
-  },
-  fr: {
-    tagline: "// classement quotidien des projets open-source les plus starisés",
-    live: "direct",
-    updated_prefix: "mis à jour",
-    repos_tracked: "dépôts suivis",
-    all_languages: "Tous les langages",
-    fetching: "récupération des données...",
-    no_results: "aucun dépôt correspondant.",
-    subscribe_link: "s'abonner →",
-    github_link: "⭐ GitHub",
-    search_placeholder: "/ rechercher...",
-  },
-  ja: {
-    tagline: "// 毎日更新される最もスターを集めたオープンソースプロジェクト",
-    live: "ライブ",
-    updated_prefix: "更新日",
-    repos_tracked: "件のリポジトリ",
-    all_languages: "すべての言語",
-    fetching: "データを取得中...",
-    no_results: "一致するリポジトリはありません。",
-    subscribe_link: "購読する →",
-    github_link: "⭐ GitHub",
-    search_placeholder: "/ リポジトリ検索...",
-  },
-  ko: {
-    tagline: "// 가장 많은 스타를 받은 오픈소스 프로젝트 일간 랭킹",
-    live: "실시간",
-    updated_prefix: "업데이트",
-    repos_tracked: "개 저장소",
-    all_languages: "모든 언어",
-    fetching: "데이터 불러오는 중...",
-    no_results: "검색 결과가 없습니다.",
-    subscribe_link: "구독하기 →",
-    github_link: "⭐ GitHub",
-    search_placeholder: "/ 저장소 검색...",
-  },
-  de: {
-    tagline: "// tägliche Bestenliste der am meisten gestarnten Open-Source-Projekte",
-    live: "live",
-    updated_prefix: "aktualisiert",
-    repos_tracked: "Repos verfolgt",
-    all_languages: "Alle Sprachen",
-    fetching: "Lade Daten...",
-    no_results: "keine passenden Repos.",
-    subscribe_link: "abonnieren →",
-    github_link: "⭐ GitHub",
-    search_placeholder: "/ Suche Repos...",
-  }
+  en: { tagline: "// daily leaderboard of the most starred open-source projects on earth", live: "live", updated_prefix: "updated", repos_tracked: "repos tracked", all_languages: "All Languages", fetching: "fetching star data...", no_results: "no repos match your search.", subscribe_link: "subscribe →", github_link: "⭐ GitHub", search_placeholder: "/ search repos..." },
+  zh: { tagline: "// 每日全球星标最多的开源项目排行榜", live: "实时", updated_prefix: "更新于", repos_tracked: "个项目", all_languages: "所有语言", fetching: "加载星标数据中...", no_results: "没有找到匹配的项目。", subscribe_link: "订阅 →", github_link: "⭐ GitHub", search_placeholder: "/ 搜索仓库..." },
+  es: { tagline: "// ranking diario de proyectos open-source con más estrellas", live: "en vivo", updated_prefix: "actualizado", repos_tracked: "repos rastreados", all_languages: "Todos los lenguajes", fetching: "cargando datos...", no_results: "no hay repositorios que coincidan.", subscribe_link: "suscribirse →", github_link: "⭐ GitHub", search_placeholder: "/ buscar repos..." },
+  fr: { tagline: "// classement quotidien des projets open-source les plus starisés", live: "direct", updated_prefix: "mis à jour", repos_tracked: "dépôts suivis", all_languages: "Tous les langages", fetching: "récupération des données...", no_results: "aucun dépôt correspondant.", subscribe_link: "s'abonner →", github_link: "⭐ GitHub", search_placeholder: "/ rechercher..." },
+  de: { tagline: "// tägliche Bestenliste der am meisten gestarnten Open-Source-Projekte", live: "live", updated_prefix: "aktualisiert", repos_tracked: "Repos verfolgt", all_languages: "Alle Sprachen", fetching: "Lade Daten...", no_results: "keine passenden Repos.", subscribe_link: "abonnieren →", github_link: "⭐ GitHub", search_placeholder: "/ Suche Repos..." },
+  ja: { tagline: "// 毎日更新される最もスターを集めたオープンソースプロジェクト", live: "ライブ", updated_prefix: "更新日", repos_tracked: "件のリポジトリ", all_languages: "すべての言語", fetching: "データを取得中...", no_results: "一致するリポジトリはありません。", subscribe_link: "購読する →", github_link: "⭐ GitHub", search_placeholder: "/ リポジトリ検索..." },
+  ko: { tagline: "// 가장 많은 스타를 받은 오픈소스 프로젝트 일간 랭킹", live: "실시간", updated_prefix: "업데이트", repos_tracked: "개 저장소", all_languages: "모든 언어", fetching: "데이터 불러오는 중...", no_results: "검색 결과가 없습니다.", subscribe_link: "구독하기 →", github_link: "⭐ GitHub", search_placeholder: "/ 저장소 검색..." },
+  ru: { tagline: "// ежедневный рейтинг самых популярных open-source проектов", live: "вживую", updated_prefix: "обновлено", repos_tracked: "репозиториев отслеживается", all_languages: "Все языки", fetching: "загрузка данных...", no_results: "нет совпадений.", subscribe_link: "подписаться →", github_link: "⭐ GitHub", search_placeholder: "/ поиск репозиториев..." },
+  pt: { tagline: "// ranking diário dos projetos open-source mais estrelados", live: "ao vivo", updated_prefix: "atualizado", repos_tracked: "repos rastreados", all_languages: "Todas as linguagens", fetching: "carregando dados...", no_results: "nenhum repositório corresponde.", subscribe_link: "inscrever-se →", github_link: "⭐ GitHub", search_placeholder: "/ pesquisar repositórios..." },
+  it: { tagline: "// classifica giornaliera dei progetti open-source più stellati", live: "live", updated_prefix: "aggiornato", repos_tracked: "repo tracciate", all_languages: "Tutti i linguaggi", fetching: "caricamento dati...", no_results: "nessun repository corrispondente.", subscribe_link: "iscriviti →", github_link: "⭐ GitHub", search_placeholder: "/ cerca repo..." },
+  nl: { tagline: "// dagelijkse ranglijst van de meest gestarde open-source projecten", live: "live", updated_prefix: "bijgewerkt", repos_tracked: "repo's gevolgd", all_languages: "Alle talen", fetching: "gegevens ophalen...", no_results: "geen overeenkomende repo's.", subscribe_link: "abonneren →", github_link: "⭐ GitHub", search_placeholder: "/ zoek repo's..." },
+  pl: { tagline: "// codzienny ranking najbardziej oznaczonych gwiazdkami projektów open-source", live: "na żywo", updated_prefix: "zaktualizowano", repos_tracked: "śledzonych repozytoriów", all_languages: "Wszystkie języki", fetching: "pobieranie danych...", no_results: "brak pasujących repozytoriów.", subscribe_link: "subskrybuj →", github_link: "⭐ GitHub", search_placeholder: "/ szukaj repozytoriów..." },
+  tr: { tagline: "// en çok yıldızlanan açık kaynak projelerin günlük sıralaması", live: "canlı", updated_prefix: "güncellendi", repos_tracked: "repo takip ediliyor", all_languages: "Tüm Diller", fetching: "veriler alınıyor...", no_results: "eşleşen repo yok.", subscribe_link: "abone ol →", github_link: "⭐ GitHub", search_placeholder: "/ repo ara..." },
+  vi: { tagline: "// bảng xếp hạng hàng ngày của các dự án nguồn mở được gắn sao nhiều nhất", live: "trực tiếp", updated_prefix: "cập nhật", repos_tracked: "kho theo dõi", all_languages: "Tất cả ngôn ngữ", fetching: "đang tải dữ liệu...", no_results: "không tìm thấy kho phù hợp.", subscribe_link: "đăng ký →", github_link: "⭐ GitHub", search_placeholder: "/ tìm kiếm kho..." },
+  th: { tagline: "// อันดับประจำวันของโปรเจกต์โอเพนซอร์สที่มีดาวมากที่สุด", live: "สด", updated_prefix: "อัปเดตเมื่อ", repos_tracked: "ติดตาม repo", all_languages: "ทุกภาษา", fetching: "กำลังโหลดข้อมูล...", no_results: "ไม่พบ repo ที่ตรงกัน", subscribe_link: "ติดตาม →", github_link: "⭐ GitHub", search_placeholder: "/ ค้นหา repo..." },
+  ar: { tagline: "// الترتيب اليومي للمشاريع مفتوحة المصدر الأكثر حصولاً على النجوم", live: "مباشر", updated_prefix: "تم التحديث", repos_tracked: "مستودع تم تتبعها", all_languages: "جميع اللغات", fetching: "جاري تحميل البيانات...", no_results: "لا توجد مستودعات مطابقة.", subscribe_link: "اشترك ←", github_link: "⭐ GitHub", search_placeholder: "/ ابحث في المستودعات..." },
+  hi: { tagline: "// सबसे अधिक स्टार प्राप्त ओपन-सोर्स प्रोजेक्ट्स की दैनिक सूची", live: "लाइव", updated_prefix: "अपडेट किया गया", repos_tracked: "रिपोजिटरी ट्रैक की गईं", all_languages: "सभी भाषाएँ", fetching: "डेटा लोड हो रहा है...", no_results: "कोई मेल खाने वाला रिपो नहीं।", subscribe_link: "सदस्यता लें →", github_link: "⭐ GitHub", search_placeholder: "/ रिपॉजिटरी खोजें..." }
 };
 
 let currentLang = localStorage.getItem('preferredLang') || 'en';
@@ -732,7 +681,6 @@ function applyTranslations() {
   const dict = translations[currentLang];
   if (!dict) return;
   
-  // Update all elements with data-i18n attribute
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key] !== undefined) {
@@ -744,31 +692,22 @@ function applyTranslations() {
     }
   });
   
-  // Special case: search input placeholder
   const searchInput = document.getElementById('search');
   if (searchInput && dict.search_placeholder) {
     searchInput.placeholder = dict.search_placeholder;
   }
   
-  // Update language filter's first option (All Languages)
   const langFilter = document.getElementById('lang-filter');
   if (langFilter && langFilter.options[0] && dict.all_languages) {
     langFilter.options[0].textContent = dict.all_languages;
   }
-  
-  // Also update any dynamic texts that were not caught (like stat labels might need refresh)
-  const statDateSpan = document.getElementById('stat-date');
-  if (statDateSpan && statDateSpan.textContent !== '—') {
-    // keep date numeric but update prefix around? Already via data-i18n on span parent.
-  }
 }
 
-// Update HTML lang attribute
 function setLanguage(lang) {
+  if (!translations[lang]) return;
   currentLang = lang;
   localStorage.setItem('preferredLang', lang);
   applyTranslations();
-  // re-trigger any placeholder refresh for search
   const searchBox = document.getElementById('search');
   if (searchBox && translations[lang]?.search_placeholder) {
     searchBox.placeholder = translations[lang].search_placeholder;
@@ -784,191 +723,10 @@ langBtn.addEventListener('click', (e) => {
   langPanel.classList.toggle('hidden');
 });
 
-// Close panel when clicking outside
 document.addEventListener('click', (e) => {
   if (!langPanel.contains(e.target) && e.target !== langBtn) {
     langPanel.classList.add('hidden');
   }
 });
 
-// Language option click handlers
-document.querySelectorAll('.lang-option').forEach(opt => {
-  opt.addEventListener('click', (e) => {
-    const langCode = opt.getAttribute('data-lang');
-    if (langCode) {
-      setLanguage(langCode);
-      langPanel.classList.add('hidden');
-      // Refresh the repo grid text (description, topics are data-driven, not translated)
-      // The static parts of cards are data fields (repo desc remains original)
-      // filter placeholders are updated, no need to re-render.
-    }
-  });
-});
-
-// ── Data loading ──────────────────────────────────────────────────
-let ALL_REPOS = [];
-
-async function loadData() {
-  try {
-    const res  = await fetch(`./data/repos.json?t=${Date.now()}`);
-    const data = await res.json();
-    ALL_REPOS  = data.repos || [];
-
-    document.getElementById('stat-date').textContent  = data.updated_date || '—';
-    document.getElementById('stat-count').textContent = ALL_REPOS.length;
-
-    populateLangFilter(ALL_REPOS);
-    renderGrid(ALL_REPOS);
-    // after data loaded, ensure translations applied (especially for dynamic filter placeholder)
-    applyTranslations();
-  } catch(e) {
-    document.getElementById('loading').innerHTML =
-      '<p style="color:var(--red);font-family:var(--mono);font-size:13px">' +
-      '⚠ Could not load data. Run the fetch script first.</p>';
-    console.error(e);
-  }
-}
-
-// ── Language filter ───────────────────────────────────────────────
-function populateLangFilter(repos) {
-  const langs = [...new Set(repos.map(r => r.language).filter(Boolean))].sort();
-  const sel   = document.getElementById('lang-filter');
-  // keep first "All Languages" option
-  while(sel.options.length > 1) sel.remove(1);
-  langs.forEach(l => {
-    const opt = document.createElement('option');
-    opt.value = l; opt.textContent = l;
-    sel.appendChild(opt);
-  });
-}
-
-// ── Render ────────────────────────────────────────────────────────
-function renderGrid(repos) {
-  const grid   = document.getElementById('repo-grid');
-  const empty  = document.getElementById('empty');
-  const loading = document.getElementById('loading');
-
-  loading.style.display = 'none';
-
-  if (!repos.length) {
-    empty.style.display = 'block';
-    grid.innerHTML = '';
-    return;
-  }
-
-  empty.style.display = 'none';
-  grid.innerHTML = repos.map((r, i) => cardHTML(r, i)).join('');
-}
-
-function fmt(n) {
-  if (n >= 1_000_000) return (n/1_000_000).toFixed(1) + 'M';
-  if (n >= 1_000)     return (n/1_000).toFixed(1) + 'k';
-  return n;
-}
-
-function rankEmoji(rank) {
-  if (rank === 1) return '🥇';
-  if (rank === 2) return '🥈';
-  if (rank === 3) return '🥉';
-  return `#${rank}`;
-}
-
-function cardHTML(r, i) {
-  const delay    = Math.min(i * 40, 600);
-  const topics   = (r.topics || []).slice(0,4).map(t =>
-    `<span class="topic">${escapeHtml(t)}</span>`).join('');
-  const langDot  = r.lang_color
-    ? `<span class="lang-dot" style="background:${r.lang_color}"></span>`
-    : '';
-  const rankClass = r.rank <= 3 ? `rank-${r.rank}` : '';
-
-  return `
-  <a class="repo-card ${rankClass}" href="${r.url}" target="_blank" rel="noopener"
-     style="animation-delay:${delay}ms">
-    <div class="card-top">
-      <img class="avatar" src="${r.avatar}" alt="${escapeHtml(r.owner)}" loading="lazy"
-           onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\'/%3E'">
-      <div class="card-meta">
-        <div class="repo-name">${escapeHtml(r.name)}</div>
-        <div class="repo-owner">${escapeHtml(r.owner)}</div>
-      </div>
-      <div class="rank-badge">${rankEmoji(r.rank)}</div>
-    </div>
-
-    ${r.description ? `<p class="repo-desc">${escapeHtml(r.description)}</p>` : ''}
-
-    ${topics ? `<div class="topics">${topics}</div>` : ''}
-
-    <div class="card-footer">
-      <div class="stat">⭐ <span class="n stars-count">${fmt(r.stars)}</span></div>
-      <div class="stat">🍴 <span class="n">${fmt(r.forks)}</span></div>
-      ${r.language ? `<div class="stat" style="margin-left:auto">${langDot}<span>${escapeHtml(r.language)}</span></div>` : ''}
-    </div>
-  </a>`;
-}
-
-function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/[&<>]/g, function(m) {
-    if (m === '&') return '&amp;';
-    if (m === '<') return '&lt;';
-    if (m === '>') return '&gt;';
-    return m;
-  }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-    return c;
-  });
-}
-
-// ── Filtering ─────────────────────────────────────────────────────
-function filterRepos() {
-  const q    = document.getElementById('search').value.toLowerCase().trim();
-  const lang = document.getElementById('lang-filter').value;
-
-  const filtered = ALL_REPOS.filter(r => {
-    const matchQ = !q ||
-      r.name.toLowerCase().includes(q) ||
-      r.full_name.toLowerCase().includes(q) ||
-      (r.description || '').toLowerCase().includes(q) ||
-      (r.topics || []).some(t => t.toLowerCase().includes(q));
-    const matchL = !lang || r.language === lang;
-    return matchQ && matchL;
-  });
-
-  renderGrid(filtered);
-}
-
-document.getElementById('search').addEventListener('input', filterRepos);
-document.getElementById('lang-filter').addEventListener('change', filterRepos);
-
-// ── Scroll top button ─────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  const btn = document.getElementById('scroll-top');
-  btn.classList.toggle('visible', window.scrollY > 400);
-});
-
-// ── Theme toggle ─────────────────────────────────────────────────
-function toggleTheme() {
-  const isLight = document.body.classList.toggle('light');
-  document.getElementById('theme-toggle').textContent = isLight ? '🌙' : '☀️';
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-}
-
-// Remember user's preference for theme and language
-if (localStorage.getItem('theme') === 'light') {
-  document.body.classList.add('light');
-  document.getElementById('theme-toggle').textContent = '🌙';
-} else {
-  document.getElementById('theme-toggle').textContent = '☀️';
-}
-
-// Apply saved language from localStorage
-if (localStorage.getItem('preferredLang')) {
-  currentLang = localStorage.getItem('preferredLang');
-}
-setLanguage(currentLang);
-
-// ── Boot ──────────────────────────────────────────────────────────
-loadData();
-</script>
-</body>
-</html>
+document.querySelectorAll
